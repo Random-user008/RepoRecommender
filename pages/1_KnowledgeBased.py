@@ -1,5 +1,9 @@
 import streamlit as st
 import streamlit.components.v1 as components
+st.set_page_config(
+    page_title="GitHub Project Recommendation System",
+    page_icon="GitHub-icon.png",
+)
 components.html("""
      <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');</style>
