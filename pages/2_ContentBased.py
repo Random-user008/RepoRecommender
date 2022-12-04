@@ -198,11 +198,10 @@ i = df_dist.columns[-1]
 df_dist.loc[df_dist[i] == 0, i] = 1000
 # Get minimun distance
 min = df_dist[i].min()
-st.write("Min dist:",min)
 # Filter all repo within that minimun distance
 closest_repos = df_dist[i][df_dist[i] == min].index, i, min
 # print results
 st.write("Similar repos to %s are: " % GITHUBUSER )
-for recomended_repo in (df_dist[i][df_dist[i] == min].index[0:25]):
+for recomended_repo in (df_dist[i][df_dist[i] == min].index[0:12]):
  
     st.write(recomended_repo)
