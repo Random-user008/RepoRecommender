@@ -39,7 +39,7 @@ from sklearn.ensemble import RandomForestClassifier
     # st.title(f"Welcome to GitHub Project Recommendation System And User Analytics")
 st.set_page_config(
     page_title="GitHub Project Recommendation System",
-    page_icon="👋",
+    page_icon="GitHub-icon.png",
 )
 components.html("""
 <style>
