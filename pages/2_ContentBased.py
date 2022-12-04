@@ -198,6 +198,7 @@ i = df_dist.columns[-1]
 df_dist.loc[df_dist[i] == 0, i] = 1000
 # Get minimun distance
 min = df_dist[i].min()
+st.write("Min dist:",)
 # Filter all repo within that minimun distance
 closest_repos = df_dist[i][df_dist[i] == min].index, i, min
 # print results
