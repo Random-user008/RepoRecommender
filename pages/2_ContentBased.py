@@ -102,9 +102,10 @@ url = 'https://api.github.com/users/%s/repos?sort=updated' % github_user
 headers = {'content-type': 'application/json',
           'Accept-Charset': 'UTF-8',
           'Accept': 'application/vnd.github.mercy-preview+json'}
-r = requests.get(url,  headers=headers, auth=HTTPBasicAuth(
-   "RISHABH175", PERSONAL_TOKEN))
-# r = requests.get('https://api.github.com/users/kaayush71/repos',headers = headers)
+# r = requests.get(url,  headers=headers, auth=HTTPBasicAuth(
+#    "RISHABH175", PERSONAL_TOKEN))
+
+r = requests.get(url,headers = headers)
 json_response = r.json()
 
 

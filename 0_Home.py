@@ -10,10 +10,10 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 # import seaborn as sns
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 # from sklearn.preprocessing import StandardScaler
 # from sklearn.feature_selection import RFE
-from sklearn.ensemble import RandomForestClassifier
+# from sklearn.ensemble import RandomForestClassifier
 # from sklearn.model_selection import RandomizedSearchCV
 # from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 # from sklearn.decomposition import PCA, KernelPCA
