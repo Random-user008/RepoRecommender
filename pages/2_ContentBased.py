@@ -90,7 +90,7 @@ from requests.auth import HTTPBasicAuth
 github_user = GITHUBUSER
 # We have do not have internet access inside the notebook, 
 # but the coude to query github api would be
-PERSONAL_TOKEN = "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"
+PERSONAL_TOKEN = "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"
 
 # Token is not mandatory, but there is a query rate limit, for those API calls which do not use token.  
 
@@ -99,7 +99,7 @@ headers = {'content-type': 'application/json',
           'Accept-Charset': 'UTF-8',
           'Accept': 'application/vnd.github.mercy-preview+json'}
 r = requests.get(url,  headers=headers, auth=HTTPBasicAuth(
-   "kaayush71", PERSONAL_TOKEN))
+   "RISHABH175", PERSONAL_TOKEN))
 # r = requests.get('https://api.github.com/users/kaayush71/repos',headers = headers)
 json_response = r.json()
 
