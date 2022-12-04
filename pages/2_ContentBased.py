@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 import time
-
+from streamlit_card import card
 import warnings
 warnings.filterwarnings('ignore')
 st.set_page_config(
@@ -201,7 +201,13 @@ min = df_dist[i].min()
 # Filter all repo within that minimun distance
 closest_repos = df_dist[i][df_dist[i] == min].index, i, min
 # print results
-st.write("Similar repos to %s are: " % GITHUBUSER )
+st.write("Similar repos to %s's interests are: " % GITHUBUSER )
 for recomended_repo in (df_dist[i][df_dist[i] == min].index[0:12]):
- 
-    st.write(recomended_repo)
+    url = 'https://api.github.com/repos/%s'%recomended_repo
+    data1 = requests.get(url,headers=headers).json()
+    card(
+        title=recomended_repo,
+        text=data1['description'],
+        image='https://images.pexels.com/photos/952670/pexels-photo-952670.jpeg',
+    )
+    # st.write(recomended_repo)
