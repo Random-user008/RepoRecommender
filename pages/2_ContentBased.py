@@ -90,7 +90,7 @@ from requests.auth import HTTPBasicAuth
 github_user = GITHUBUSER
 # We have do not have internet access inside the notebook, 
 # but the coude to query github api would be
-PERSONAL_TOKEN = "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"
+PERSONAL_TOKEN = "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"
 
 # Token is not mandatory, but there is a query rate limit, for those API calls which do not use token.  
 
