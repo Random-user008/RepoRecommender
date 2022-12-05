@@ -107,18 +107,18 @@ with st.form(key = "form1"):
         from scipy.spatial.distance import squareform, pdist
         repos = list(df_backup['Username'] + "/" + df_backup['Repository Name'])
         repos.extend(["Interested Repo"]) # We add to the csv reponame list, the repo name from github 
-        print(repos)
-        print (repos[-1] ,len(repos), df.shape, df_backup.shape)
+        # print(repos)
+        # print (repos[-1] ,len(repos), df.shape, df_backup.shape)
         # We calculate the euclidean distance for the binary label matrix 3
         res = pdist(df, 'euclidean')
 
         df_dist = pd.DataFrame(squareform(res), index=repos, columns=repos)
 
-        print("""This is the euclidean distance matrix for 
-            - the user repo (github-recommendation-engine) 
-            - other eight repos :
-            The lower the distance, stronger the similarity between repos
-            """)
+        # print("""This is the euclidean distance matrix for 
+        #     - the user repo (github-recommendation-engine) 
+        #     - other eight repos :
+        #     The lower the distance, stronger the similarity between repos
+        #     """)
 
 
         import seaborn as sns
