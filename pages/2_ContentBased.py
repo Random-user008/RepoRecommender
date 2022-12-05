@@ -102,7 +102,7 @@ with st.form(key = "form1"):
             # PERSONAL_TOKEN = "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"
 
             # Token is not mandatory, but there is a query rate limit, for those API calls which do not use token.  
-
+            print(st.secrets['db_username'],st.secrets['db_token'])
             url = 'https://api.github.com/users/%s/repos?sort=updated' % github_user
             headers = {'content-type': 'application/json',
                     'Accept-Charset': 'UTF-8',
@@ -120,6 +120,7 @@ with st.form(key = "form1"):
             repo_description = []
 
             for ob in json_response:
+                print(ob)
                 if ob['topics']:
                     repo_topics = repo_topics + ob['topics']
                 if ob['language']:
@@ -206,7 +207,7 @@ with st.form(key = "form1"):
             small2 = df_dist[i].drop_duplicates().nsmallest(2)
             # st.write(small2[1])
             # Filter all repo within that minimun distance
-            print(st.secrets['db_username'],st.secrets['db_token'])
+            
             closest_repos = df_dist[i][df_dist[i] == min].index, i, min
             # print results
             st.write("Similar repos to %s's interests are: " % GITHUBUSER )
