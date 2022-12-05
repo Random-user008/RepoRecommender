@@ -1,7 +1,8 @@
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
-
+import requests
+from requests.auth import HTTPBasicAuth
 st.set_page_config(
     page_title="GitHub Project Recommendation System",
     page_icon="GitHub-icon.png",
@@ -52,9 +53,9 @@ with st.form(key = "form1"):
                 df[tag] = 0
             try:
                 if len(tag) > 4 :
-                    df.loc[df['Repository Name'].str.contains(tag), tag] = 1
-                    df.loc[df['Description'].str.contains(tag), tag] = 1
-                df.loc[df['Tags'].str.contains(tag + ","), tag] = 1
+                    df.loc[df['Repository Name'].str.contains(tag), tag] += 1
+                    df.loc[df['Description'].str.contains(tag), tag] += 1
+                df.loc[df['Tags'].str.contains(tag + ","), tag] += 1
             except Exception:
                 pass
         # Remove columns not needed
@@ -85,7 +86,7 @@ with st.form(key = "form1"):
             if j is not None:
                 if j.lower() in df.columns:
                     #print("Setting to 1", j.lower())
-                    new_element[j.lower()] = 1
+                    new_element[j.lower()] += 1
 
                 # Concat new user repo dataframe to stared repos dataframe
         df = pd.concat([df, new_element])
@@ -137,8 +138,49 @@ with st.form(key = "form1"):
         closest_repos = df_dist[i][df_dist[i] == min].index, i, min
         # print results
         st.write("Similar repos to you Interests")
-        for recomended_repo in (df_dist[i][df_dist[i] == min].index[0:12]):
-        
-            st.write(recomended_repo)
+        small2 = df_dist[i].drop_duplicates().nsmallest(2)
+        headers = {'content-type': 'application/json',
+                    'Accept-Charset': 'UTF-8',
+                    'Accept': 'application/vnd.github.mercy-preview+json'}
+        # st.write(small2[1])
+        for recomended_repo in (df_dist[i][df_dist[i] <= small2[1]].index[0:12]):
+                data1 = requests.get('https://api.github.com/repos/%s'% recomended_repo,headers=headers,auth=HTTPBasicAuth(st.secrets['db_username'],st.secrets['db_token']) ).json()
+            # print(data1)
+                if data1['description']:
+                    components.html(""" <style>@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&display=swap');</style>
+                                        <a href="%s" class="data-card" target="_blank" style="display: flex;
+                                                                                            flex-direction: column;
+                                                                                            max-width: 20.75em;
+                                                                                            min-height: 20.75em;
+                                                                                            overflow: hidden;
+                                                                                            border-radius: 15px;
+                                                                                            text-decoration: none;
+                                                                                            background: #753BBD;
+                                                                                            margin: 1em;
+                                                                                            padding: 2.75em 2.5em;
+                                                                                            box-shadow: 0 1.5em 2.5em -.5em rgba(#000000, .1);
+                                                                                            transition: transform .45s ease, background .45s ease">
+                                        <image src="%s" style="border-radius: 50px;margin-left:100px;margin-bottom:35px" height="100" width="100">
+                                        <h3 style="color: white;word-wrap:break-word;
+                                        font-size: 2.1em;
+                                        font-weight: 600;
+                                        line-height: 1;
+                                        padding-bottom: .5em;
+                                        margin: 0 0 0.142857143em;
+                                        border-bottom: 2px solid white;
+                                        transition: color .45s ease, border .45s ease;">%s</h3>
+                                        <p style="color: white;word-wrap:break-word;
+                                                    font-size:1.25em;
+                                                    font-weight: 600;
+                                                    line-height: 1.8;
+                                                    margin: 0 0 1.25em;
+                                                    ">%s</p>
+                                        <span class="link-text" style="color:white;" >
+                                            View 
+                                            <svg style="margin-left:0.5em;transition: transform .6s ease;" width="25" height="16" viewBox="0 0 25 16" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="white"/>
+                                        </svg>
+                                            </span>
+                                        </a>"""%(data1['html_url'],data1['owner']['avatar_url'],recomended_repo,data1['description']),height=500,width=500)
 
         
